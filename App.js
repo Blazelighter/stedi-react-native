@@ -1,7 +1,7 @@
-import React from 'react';
+import {useState} from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Login from './Login.js';
 import Counter from './Counter.js';
 import SettingsScreen from './SettingsScreen.js';
 import Home from './Home.js';
@@ -12,7 +12,10 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 // import Icons from "./Icons";
 const Tab = createMaterialBottomTabNavigator();
 
-export default function App(props) {
+export default function App() {
+  const [userLoggedIn, setUserLoggedIn] = useState(false);
+
+  if (userLoggedIn){
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -54,6 +57,13 @@ export default function App(props) {
     </NavigationContainer>
   );
 
+
+} else{
+
+  return(
+    <Login/>
+  )
+}
 
 }
 
