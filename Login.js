@@ -3,12 +3,23 @@ import { SafeAreaView, StyleSheet, TextInput, TouchableOpacity, Text } from "rea
 
 const sendText = async (phoneNumber) => {
   console.log("phoneNumber: ",phoneNumber);
-  await fetch('https://dev.stedi.me/twofactorlogin/'+{phoneNumber}, {
+  await fetch('https://dev.stedi.me/twofactorlogin/'+phoneNumber, {
     method: 'POST',
     headers:{
       'content-type':'application/text'
     }
   });
+}
+
+const getToken = async ({phoneNumber, oneTimePassword}) => {
+  const tokenResponse = await fetch('https://dev.stedi.me/twofactorlogin', 
+    {
+      method: 'POST',
+      body:JSON.stringify({oneTimePassword, phoneNumber}),
+      headers: {'content-type':'application/json'}
+    });
+
+  const tokenResponseString = await tokenResponse.text();
 }
 
 const Login = () => {
@@ -41,7 +52,7 @@ const Login = () => {
       />
       <TouchableOpacity
         style={styles.button}
-        onPress={()=>{console.log('Login button was clicked')}}
+        onPress={()=>{getToken(phoneNumber, oneTimePassword)}}
       >
         <Text>Login</Text>
       </TouchableOpacity>
