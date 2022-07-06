@@ -14,6 +14,9 @@ const sendText = async (phoneNumber) => {
 
 
 const getToken = async ({phoneNumber, oneTimePassword, setUserLoggedIn}) => {
+
+  setUserLoggedIn(true);
+
   const tokenResponse = await fetch('https://dev.stedi.me/twofactorlogin', 
     {
       method: 'POST',
@@ -27,6 +30,13 @@ const getToken = async ({phoneNumber, oneTimePassword, setUserLoggedIn}) => {
     setUserLoggedIn(true);
   }
   const tokenResponseString = await tokenResponse.text();
+  console.log("Token",tokenResponseString);
+  const user = await fetch("https://dev.stedi.me/validate/" + tokenResponseString).text();
+  console.log("User", user);
+}
+
+const getUserName = async () => {
+  
 }
 
 const Login = (props) => {
